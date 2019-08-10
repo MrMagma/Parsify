@@ -8,7 +8,7 @@ matcher {
     checks:checker->("|"->checks:checker)*
 }
 checker {
-    (name:([a-zA-Z]->[a-zA-Z0-9]*)->":")?->(("("->child:matcher->")")|set|string)->repeater:repeater?
+    (name:([a-zA-Z]->[a-zA-Z0-9]*)->":")?->(("("->condition:matcher->")")|condition:set|condition:string)->repeater:repeater?
 }
 string {
     "\""->content:(character*)->"\""
