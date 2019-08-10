@@ -1,0 +1,27 @@
+syntax {
+    rules:rule*
+}
+rule {
+    name:([a-zA-Z]->[a-zA-Z0-9])->"{"->definition:matcher->("->"->definition:matcher)*->"}"
+}
+matcher {
+    checks:checker->("|"->checks:checker)*
+}
+checker {
+    (name:([a-zA-Z]->[a-zA-Z0-9]*)->":")?->(("("->child:matcher->")")|set|string)->repeater:repeater?
+}
+string {
+    "\""->content:(character*)->"\""
+}
+set {
+    (elements:"*")|("["->flag:"^"?->elements:((character->"-"->character)|character)*->"]")
+}
+character {
+    ("\\"->("\""|"\\"|"/"|"b"|"f"|"n"|"r"|"t"|("u"->[a-zA-Z0-9]{4}))|[^\\]
+}
+repeater {
+    (content:"*"|content:"+"|content:"?"|("{"->content:integer->"}")|("{"->content:(integer?->","->integer?)->"}")|)
+}
+integer {
+    value:([1-9][0-9]*)
+}

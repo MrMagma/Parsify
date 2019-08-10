@@ -1,0 +1,27 @@
+object {
+    whitespace?->"{"->whitespace?->(properties:property->(whitespace?->","->whitespace?->properties:property)*)?->whitespace?->"}"
+}
+
+property {
+    string->whitespace?->":"->whitespace->value
+}
+
+array {
+    whitespace?->"["->whitespace?->(elements:value->(whitespace?->","->whitespace?->elements:value)*)?->whitespace?->"]"
+}
+
+value {
+    value:(string|number|object|array|"true"|"false"|"null")
+}
+
+string {
+    "\""->value:(character*)->"\""
+}
+
+number {
+    value:("-"?->(([1-9]->[0-9]*)|"0")->("."->[0-9]+)?->(("e"|"E")->("+"|"-")?->[0-9]+)?)
+}
+
+whitespace {
+    (" "|"\n"|"\t"|"\r")+
+}
