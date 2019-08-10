@@ -1,0 +1,3 @@
+ignore /\s/
+Token Identifier is /([A-Za-z]+)/
+Token Regex is /\/([^]*?[^\\])\//
