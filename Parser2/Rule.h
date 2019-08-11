@@ -8,10 +8,14 @@
 
 #include <vector>
 #include "Matcher.h"
+#include "Sequence.h"
 
 class Rule {
 public:
-    std::vector<Matcher*> definition = {};
+    Rule(std::string name, Sequence* sequence);
+    std::string name;
+    Sequence* sequence;
+    static Rule* attemptParse(FileReadInterface& input);
 };
 
 

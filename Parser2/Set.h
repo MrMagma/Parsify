@@ -7,11 +7,15 @@
 
 
 #include <string>
-#include "Condition.h"
+#include <vector>
+#include "FileReadInterface.h"
 
-class Set : public Condition {
+class Set {
 public:
-    std::string content;
+    Set(std::string flag, std::vector<std::string>& elements);
+    static Set* attemptParse(FileReadInterface& input);
+    std::string flag;
+    std::vector<std::string> elements;
 };
 
 

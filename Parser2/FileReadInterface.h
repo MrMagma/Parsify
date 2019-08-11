@@ -15,8 +15,12 @@ public:
     char operator[](int);
     void close();
     unsigned long long length();
+    void movePointer(int amount);
+    int getPointer();
+    void setPointer(int pos);
     ~FileReadInterface();
 private:
+    int pointer = 0;
     std::ifstream file;
     std::string buffer = "";
 };

@@ -7,9 +7,12 @@
 
 
 #include <string>
+#include "FileReadInterface.h"
 
 class Repeater {
 public:
+    explicit Repeater(std::string content);
+    static Repeater* attemptParse(FileReadInterface& input);
     std::string content;
 };
 

@@ -8,11 +8,14 @@
 
 #include <vector>
 #include "Checker.h"
-#include "Condition.h"
 
-class Matcher : public Condition {
+class Checker;
+
+class Matcher {
 public:
+    Matcher(std::vector<Checker*>& checks);
     std::vector<Checker*> checks = {};
+    static Matcher* attemptParse(FileReadInterface& input);
 };
 
 

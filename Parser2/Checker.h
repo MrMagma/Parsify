@@ -7,14 +7,25 @@
 
 
 #include <string>
+#include "Reference.h"
 #include "Repeater.h"
-#include "Condition.h"
+#include "Set.h"
+#include "String.h"
+#include "Matcher.h"
+#include "Sequence.h"
+
+class Sequence;
 
 class Checker {
 public:
+    Checker(std::string name, Sequence* sequence, Set* set, String* string, Reference* reference, Repeater* repeater);
     std::string name = "";
-    Condition* condition = nullptr;
+    Sequence* sequence;
+    Set* set;
+    String* string;
+    Reference* reference;
     Repeater* repeater = nullptr;
+    static Checker* attemptParse(FileReadInterface& input);
 };
 
 

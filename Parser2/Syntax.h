@@ -11,7 +11,9 @@
 
 class Syntax {
 public:
+    explicit Syntax(std::vector<Rule*>& rules);
     std::vector<Rule*> rules = {};
+    static Syntax* attemptParse(FileReadInterface& input);
 };
 
 

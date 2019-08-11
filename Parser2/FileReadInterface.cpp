@@ -14,9 +14,10 @@ FileReadInterface::FileReadInterface(const std::string& path) {
 
 char FileReadInterface::operator[](int i) {
     if (file.is_open()) {
-        while (i >= buffer.length() && !file.eof()) buffer += char(file.get());
-        if (i >= buffer.length()) return EOF;
-        else return buffer[i];
+        if (pointer + i < 0) return EOF;
+        while (pointer + i >= buffer.length() && !file.eof()) buffer += char(file.get());
+        if (pointer + i >= buffer.length()) return EOF;
+        else return buffer[pointer + i];
     }
     return EOF;
 }
@@ -34,7 +35,18 @@ unsigned long long FileReadInterface::length() {
     return pos;
 }
 
+void FileReadInterface::movePointer(int amount) {
+    pointer += amount;
+}
+
+int FileReadInterface::getPointer() {
+    return pointer;
+}
+
+void FileReadInterface::setPointer(int pos) {
+    pointer = pos;
+}
+
 FileReadInterface::~FileReadInterface() {
     close();
 }
-

@@ -2,26 +2,35 @@ syntax {
     rules:rule*
 }
 rule {
-    name:([a-zA-Z]->[a-zA-Z0-9])->"{"->definition:matcher->("->"->definition:matcher)*->"}"
+    whitespace->name:([a-zA-Z]->[a-zA-Z0-9]*)->whitespace->"{"->whitespace->sequence:sequence->whitespace->"}"->whitespace
+}
+sequence {
+    definition:matcher->whitespace->("->"->whitespace->definition:matcher->whitespace)*
 }
 matcher {
-    checks:checker->("|"->checks:checker)*
+    whitespace->checks:checker->whitespace->("|"->whitespace->checks:checker->whitespace)*
 }
 checker {
-    (name:([a-zA-Z]->[a-zA-Z0-9]*)->":")?->(("("->condition:matcher->")")|condition:set|condition:string)->repeater:repeater?
+    (name:([a-zA-Z]->[a-zA-Z0-9]*)->":"->whitespace)?->(("("->matcher:matcher->")")|set:set|string:string|reference:reference)->whitespace->repeater:repeater?
 }
 string {
-    "\""->content:(character*)->"\""
+    whitespace->"\""->content:(character*)->"\""->whitespace
+}
+reference {
+    whitespace->name:([a-zA-Z]->[a-zA-Z0-9])->whitespace
 }
 set {
-    (elements:"*")|("["->flag:"^"?->elements:((character->"-"->character)|character)*->"]")
+    whitespace->"["->flag:"^"?->elements:((character->"-"->character)|character)*->"]"->whitespace
 }
 character {
-    ("\\"->("\""|"\\"|"/"|"b"|"f"|"n"|"r"|"t"|("u"->[a-zA-Z0-9]{4}))|[^\\]
+    ("\\"->("\""|"\\"|"/"|"b"|"f"|"n"|"r"|"t"|("u"->[a-zA-Z0-9]{4}))|[^\\])
 }
 repeater {
-    (content:"*"|content:"+"|content:"?"|("{"->content:integer->"}")|("{"->content:(integer?->","->integer?)->"}")|)
+    content:"*"|content:"+"|content:"?"|("{"->content:integer->"}")|("{"->content:(integer?->","->integer?)->"}")
 }
 integer {
-    value:([1-9][0-9]*)
+    [1-9]->[0-9]*
+}
+whitespace {
+    (" "|"\t"|"\n"|"\r")*
 }

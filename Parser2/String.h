@@ -7,10 +7,12 @@
 
 
 #include <string>
-#include "Condition.h"
+#include "FileReadInterface.h"
 
-class String : public Condition {
+class String {
 public:
+    explicit String(std::string content);
+    static String* attemptParse(FileReadInterface& input);
     std::string content;
 };
 
