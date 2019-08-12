@@ -11,8 +11,7 @@
 class Definition {
 public:
     explicit Definition(std::string name);
-    // TODO This should convert a node to source code
-    virtual void toSourceCode() {};
+    virtual void toSource() {};
     std::string name;
 };
 

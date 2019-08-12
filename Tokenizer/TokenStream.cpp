@@ -5,7 +5,7 @@
 TokenStream::TokenStream(const std::string &inputPath) {
     inputFile.open(inputPath);
     if (!inputFile.is_open()) std::cerr << "TokenStream unable to open file \"" << inputPath << "\"" << std::endl;
-    init();
+    defineTokens();
 }
 
 TokenStream& TokenStream::operator>>(Token*& outputLoc) {
@@ -42,8 +42,8 @@ Token *TokenStream::peek() {
         for (const Matcher& m : matchers) {
             std::regex_search(buffer, sm, m.pattern);
             if (sm.length() > 0 && sm.position(0) == 0) {
-                if (sm.length() == 1) next = new Token(m.type, sm[1]);
-                next = new Token(m.type, sm[0]);
+                if (sm.size() == 1) next = new Token(m.type, sm[0]);
+                else next = new Token(m.type, sm[1]);
                 buffer = buffer.substr(sm[0].length(), buffer.length() - sm[0].length());
                 return next;
             }

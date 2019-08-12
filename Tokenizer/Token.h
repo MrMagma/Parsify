@@ -1,11 +1,9 @@
 #ifndef TOKENIZER_TOKEN_H
 #define TOKENIZER_TOKEN_H
-#define TOKENIZER_TOKEN_TOKENTYPES number, whitespace, identifier, regex, openBlock, closeBlock, openArray, closeArray, openParen, closeParen, arrow, End
-#include <string>
 
-enum class TokenType {
-    TOKENIZER_TOKEN_TOKENTYPES
-};
+
+#include <string>
+#include "TokenType.h"
 
 class Token {
 public:

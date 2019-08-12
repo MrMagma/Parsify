@@ -10,14 +10,14 @@
 
 class Translator {
 public:
-    Translator(const std::string& inputPath, const std::string& outputPath);
-    std::string tokenHeaderStubPath = "Token.h";
-    std::string tokenStreamHeaderStubPath = "TokenStream.h";
-    std::string tokenStreamSourceStubPath = "TokenStream.cpp";
+    std::string inputPath = "";
+    std::string tokenDefinitionPath = "";
+    std::string tokenStreamHeaderPath = "";
+    std::string tokenTypePath = "";
+    std::string endTokenName = "End";
     void translate();
 private:
     static std::string translateRegex(const std::string& regex);
-    std::string outputPath;
 };
 
 

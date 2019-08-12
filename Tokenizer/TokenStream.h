@@ -23,7 +23,7 @@ public:
     Token* get();
     Token* peek();
 private:
-    void init();
+    void defineTokens();
     Token* next = nullptr;
     unsigned long long getPointer = 0;
     std::string buffer;

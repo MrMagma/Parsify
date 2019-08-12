@@ -1,10 +1,11 @@
-#include "Tokenizer/Token.h"
-#include "Tokenizer/TokenStream.h"
-#include "Parser/Syntax.h"
+#include "Translator/Translator.h"
 
 int main() {
-    Token* t;
-    TokenStream ts("../new-syntax.txt");
-    Syntax* syntax = Syntax::attemptParse(ts);
+    Translator t;
+    t.inputPath = "../new-syntax.txt";
+    t.tokenDefinitionPath = "../Tokenizer/TokenDefinition.cpp";
+    t.tokenTypePath = "../Tokenizer/TokenType.h";
+    t.tokenStreamHeaderPath = "TokenStream.h";
+    t.translate();
     return 0;
 }
