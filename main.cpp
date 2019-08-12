@@ -1,16 +1,10 @@
-//#include "Translator/Translator.h"
-
-#include <iostream>
-#include "Parser2/Syntax.h"
+#include "Tokenizer/Token.h"
+#include "Tokenizer/TokenStream.h"
+#include "Parser/Syntax.h"
 
 int main() {
-//    Translator translator("../syntax.txt", "../Tokenizer");
-//    translator.tokenHeaderStubPath = "../stubs/Token.h";
-//    translator.tokenStreamHeaderStubPath = "../stubs/TokenStream.h";
-//    translator.tokenStreamSourceStubPath = "../stubs/TokenStream.cpp";
-//    translator.translate();
-    FileReadInterface file("../new-syntax.txt");
-    Syntax* syntax = Syntax::attemptParse(file);
-    std::cout << "Done" << std::endl;
+    Token* t;
+    TokenStream ts("../new-syntax.txt");
+    Syntax* syntax = Syntax::attemptParse(ts);
     return 0;
 }

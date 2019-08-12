@@ -1,6 +1,6 @@
 #ifndef TOKENIZER_TOKEN_H
 #define TOKENIZER_TOKEN_H
-#define TOKENIZER_TOKEN_TOKENTYPES Identifier, Regex, End
+#define TOKENIZER_TOKEN_TOKENTYPES number, whitespace, identifier, regex, openBlock, closeBlock, openArray, closeArray, openParen, closeParen, arrow, End
 #include <string>
 
 enum class TokenType {

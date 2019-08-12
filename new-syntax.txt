@@ -1,36 +1,21 @@
-syntax {
-    rules:rule*
-}
-rule {
-    whitespace->name:([a-zA-Z]->[a-zA-Z0-9]*)->whitespace->"{"->whitespace->sequence:sequence->whitespace->"}"->whitespace
-}
-sequence {
-    definition:matcher->whitespace->("->"->whitespace->definition:matcher->whitespace)*
-}
-matcher {
-    whitespace->checks:checker->whitespace->("|"->whitespace->checks:checker->whitespace)*
-}
-checker {
-    (name:([a-zA-Z]->[a-zA-Z0-9]*)->":"->whitespace)?->(("("->matcher:matcher->")")|set:set|string:string|reference:reference)->whitespace->repeater:repeater?
-}
-string {
-    whitespace->"\""->content:(character*)->"\""->whitespace
-}
-reference {
-    whitespace->name:([a-zA-Z]->[a-zA-Z0-9])->whitespace
-}
-set {
-    whitespace->"["->flag:"^"?->elements:((character->"-"->character)|character)*->"]"->whitespace
-}
-character {
-    ("\\"->("\""|"\\"|"/"|"b"|"f"|"n"|"r"|"t"|("u"->[a-zA-Z0-9]{4}))|[^\\])
-}
-repeater {
-    content:"*"|content:"+"|content:"?"|("{"->content:integer->"}")|("{"->content:(integer?->","->integer?)->"}")
-}
-integer {
-    [1-9]->[0-9]*
-}
-whitespace {
-    (" "|"\t"|"\n"|"\r")*
-}
+Token number /[1-9][0-9]*/
+
+Token whitespace /\s+/
+
+Token identifier /[a-zA-Z][a-zA-Z0-9]*/
+
+Token regex /\/[^]*?[^\\]\//
+
+Token openBlock /\{/
+
+Token closeBlock /\}/
+
+Token openArray /\[/
+
+Token closeArray /\]/
+
+Token openParen /\(/
+
+Token closeParen /\)/
+
+Token arrow /\-\>/

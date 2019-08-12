@@ -7,7 +7,6 @@
 
 
 #include <string>
-#include "../Parser/Parser.h"
 
 class Translator {
 public:
@@ -18,7 +17,6 @@ public:
     void translate();
 private:
     static std::string translateRegex(const std::string& regex);
-    Parser parser;
     std::string outputPath;
 };
 

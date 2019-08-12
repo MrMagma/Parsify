@@ -1,12 +1,48 @@
 //
-// Created by Joshua on 8/9/2019.
+// Created by Joshua on 8/11/2019.
 //
 
 #include "TokenDefinition.h"
 
-#include <utility>
+TokenDefinition::TokenDefinition(std::string name, std::string expression) : Definition(name) {
+    this->expression = expression;
+}
 
-TokenDefinition::TokenDefinition(std::string name, std::string pattern) {
-    this->name = std::move(name);
-    this->pattern = std::move(pattern);
+Definition *TokenDefinition::attemptParse(TokenStream& ts) {
+    std::string name;
+    std::string expression;
+    auto start = ts.tellg();
+    if (ts.peek()->type == TokenType::whitespace) {
+        ts.get();
+    }
+    if (ts.peek()->type == TokenType::identifier && ts.peek()->content == "Token") {
+        ts.get();
+    } else {
+        ts.seekg(start);
+        return nullptr;
+    }
+    if (ts.peek()->type == TokenType::whitespace) {
+        ts.get();
+    }
+    if (ts.peek()->type == TokenType::identifier) {
+        name = ts.peek()->content;
+        ts.get();
+    } else {
+        ts.seekg(start);
+        return nullptr;
+    }
+    if (ts.peek()->type == TokenType::whitespace) {
+        ts.get();
+    }
+    if (ts.peek()->type == TokenType::regex) {
+        expression = ts.peek()->content;
+        ts.get();
+    } else {
+        ts.seekg(start);
+        return nullptr;
+    }
+    if (ts.peek()->type == TokenType::whitespace) {
+        ts.get();
+    }
+    return new TokenDefinition(name, expression);
 }
