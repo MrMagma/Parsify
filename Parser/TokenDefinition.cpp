@@ -11,24 +11,23 @@ TokenDefinition::TokenDefinition(std::string name, std::string expression) : Def
 Definition *TokenDefinition::attemptParse(TokenStream& ts) {
     std::string name;
     std::string expression;
-    auto start = ts.tellg();
+    ts.markCheckpoint();
     if (ts.peek()->type == TokenType::whitespace) {
         ts.get();
     }
     if (ts.peek()->type == TokenType::identifier && ts.peek()->content == "Token") {
         ts.get();
     } else {
-        ts.seekg(start);
+        ts.goBack();
         return nullptr;
     }
     if (ts.peek()->type == TokenType::whitespace) {
         ts.get();
     }
     if (ts.peek()->type == TokenType::identifier) {
-        name = ts.peek()->content;
-        ts.get();
+        name = ts.get()->content;
     } else {
-        ts.seekg(start);
+        ts.goBack();
         return nullptr;
     }
     if (ts.peek()->type == TokenType::whitespace) {
@@ -38,7 +37,7 @@ Definition *TokenDefinition::attemptParse(TokenStream& ts) {
         expression = ts.peek()->content;
         ts.get();
     } else {
-        ts.seekg(start);
+        ts.goBack();
         return nullptr;
     }
     if (ts.peek()->type == TokenType::whitespace) {

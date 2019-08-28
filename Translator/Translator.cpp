@@ -42,6 +42,7 @@ void Translator::translate() {
 }
 
 std::string Translator::translateRegex(const std::string& regex) {
-    std::regex replacer("(\\\\)");
-    return std::regex_replace(regex, replacer, "\\$1");
+    std::regex slashReplacer("(\\\\)");
+    std::regex stringReplacer("\"");
+    return std::regex_replace(std::regex_replace(regex, slashReplacer, "\\$1"), stringReplacer, "\\\"");
 }

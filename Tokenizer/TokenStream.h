@@ -17,17 +17,20 @@ struct Matcher {
 class TokenStream {
 public:
     explicit TokenStream(const std::string& inputPath);
-    unsigned long long tellg();
-    void seekg(unsigned long long pos);
+    void markCheckpoint();
+    void goBack();
+    void forgetCheckpoint();
     TokenStream& operator>>(Token*&);
     Token* get();
     Token* peek();
 private:
     void defineTokens();
     Token* next = nullptr;
-    unsigned long long getPointer = 0;
+    std::vector<std::ifstream::pos_type> checkpoints = {};
+    std::ifstream::pos_type getPointer = 0;
     std::string buffer;
     std::vector<Matcher> matchers;
+    std::string inputFilePath;
     std::ifstream inputFile;
 };
 
